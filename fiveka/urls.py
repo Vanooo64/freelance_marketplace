@@ -18,7 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from customer import views
 
+from customer.views import page_not_found
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('customer/', include('customer.urls')),
+    path('', include('customer.urls')),
 ]
+
+handler404 = page_not_found
