@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{customer.title}}</h1>
+
+{% if customer.file_upload %}
+<embed src="{{ customer.file_upload.url }}" type="application/pdf" width="100%" height="600px">
+{% endif %}
+
+{{ customer.content|linebreaks }}
+{% endblock %}

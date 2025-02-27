@@ -1,7 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
+
+from customer.models import Orders, Customer
 
 menu = [{'title': 'Про сайт', 'url_name': 'about'},
         {'title': 'Додати роботу', 'url_name': 'add_order'},
@@ -24,9 +26,10 @@ cats_db = [
 ]
 
 def index(request):
+    orders = Orders.published.all()
     data = {'title': 'Головна сторінка',
             'menu': menu,
-            'orders': data_db,
+            'orders': orders,
             'cat_selected': 0
     }
     return render(request, "customer/index.html", context=data)
@@ -36,10 +39,30 @@ def about(request):
     return render(request, "customer/about.html", {'title': 'Про сайт', 'menu': menu})
 
 
+def show_order(request, order_slug):
+    order = get_object_or_404(Orders, slug=order_slug)
 
-def show_order(request, order_id):
-    return HttpResponse(f"Робота з id: {order_id}")
+    data = {
+        'title': order.title,
+        'menu': menu,
+        'order': order,
+        'cat_selected': 1,
+    }
 
+    return render(request, "customer/order.html", data)
+
+
+def show_customer(request, customer_slug):
+    customer = get_object_or_404(Customer, slug=customer_slug)
+
+    data = {
+        'title': customer.title,
+        'menu': menu,
+        'customer': customer,
+        'cat_selected': 1,
+    }
+
+    return render(request, "customer/customer.html", data)
 
 def addorder(request):
     return HttpResponse("Додавання статі")

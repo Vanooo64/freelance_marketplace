@@ -10,6 +10,7 @@ urlpatterns = [
     path('addorder/', views.addorder, name="add_order"),
     path('contact/', views.contact, name="contact"),
     path('login/', views.login, name="login"),
-    path('order/<int:order_id>/', views.show_order, name="order"),
-    path('category/<int:cat_id>/', views.show_category, name="category")
+    path('order/<slug:order_slug>/', views.show_order, name="order"),
+    path('customer/<slug:customer_slug>/', views.show_customer, name="customer"),
+    path('category/<int:cat_id>/', views.show_category, name="category"),
 ]

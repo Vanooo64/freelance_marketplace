@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<span>
+<table class="order-table">
+    <tr>
+        <td>
+            <strong>{{ order.type_of_work }}, {{ order.subject }}</strong><br>
+            {{ order.title }}
+        </td>
+    </tr>
+</table>
+
+<div class="order-info-box">
+    <strong>Сума замовлення:</strong> {{ order.order_amount }}<br>
+    <strong>Час до здачі:</strong> {{ order.deadline }}
+</div>
+</span>
+<h1>{{order.title}}</h1>
+
+{% if order.file_upload %}
+<embed src="{{ order.file_upload.url }}" type="application/pdf" width="100%" height="600px">
+{% endif %}
+
+{{ order.content|linebreaks }}
+{% endblock %}
